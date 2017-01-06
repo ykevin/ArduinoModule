@@ -2,10 +2,10 @@
 
 
 build:
-	ino build
+	ino build -m leonardo
 
 upload:
-	ino upload
+	ino upload -m leonardo
 
 clean:
 	ino clean
