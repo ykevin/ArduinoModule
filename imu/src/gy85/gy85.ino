@@ -1,4 +1,4 @@
-#include "GY85.h"
+#include "GY_85.h"
 #include <Wire.h>
 
 GY_85 GY85;     //create the object
