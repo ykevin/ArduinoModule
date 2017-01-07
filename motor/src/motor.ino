@@ -18,7 +18,7 @@ Motor motor2(MOTOR2_PWM, MOTOR2_IN_A, MOTOR2_IN_B); // front
   
 void setup() {  
  	
-        pinMode(STBY, OUTPUT); 
+    pinMode(STBY, OUTPUT); 
 
   	digitalWrite(STBY, HIGH);  
 }  
