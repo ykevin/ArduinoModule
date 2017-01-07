@@ -19,7 +19,6 @@ void loop()
     int ax = GY85.accelerometer_x( GY85.readFromAccelerometer() );
     int ay = GY85.accelerometer_y( GY85.readFromAccelerometer() );
     int az = GY85.accelerometer_z( GY85.readFromAccelerometer() );
-    
     int cx = GY85.compass_x( GY85.readFromCompass() );
     int cy = GY85.compass_y( GY85.readFromCompass() );
     int cz = GY85.compass_z( GY85.readFromCompass() );
@@ -28,7 +27,7 @@ void loop()
     float gy = GY85.gyro_y( GY85.readGyro() );
     float gz = GY85.gyro_z( GY85.readGyro() );
     float gt = GY85.temp  ( GY85.readGyro() );
-    
+
     Serial.print  ( "accelerometer" );
     Serial.print  ( " x:" );
     Serial.print  ( ax );
@@ -36,7 +35,7 @@ void loop()
     Serial.print  ( ay );
     Serial.print  ( " z:" );
     Serial.print  ( az );
-    
+
     Serial.print  ( "  compass" );
     Serial.print  ( " x:" );
     Serial.print  ( cx );
@@ -54,6 +53,6 @@ void loop()
     Serial.print  ( gz );
     Serial.print  ( " gyro temp:" );
     Serial.println( gt );
-    
+
     delay(500);             // only read every 0,5 seconds, 10ms for 100Hz, 20ms for 50Hz
 }

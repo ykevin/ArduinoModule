@@ -18,6 +18,8 @@ float Battery::Get_Volt(void)
 float Battery::Get_Battery_Notifier()
 {
 	float Volt = Get_Volt();
+	if(Volt > _Volt_Max)
+		Volt = _Volt_Max;
 
 	return ((Volt-_Volt_Min) / (_Volt_Max - _Volt_Min) * 100);
 }
