@@ -75,9 +75,9 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
 #define SDA_PORT PORTF
-#define SDA_PIN 0
+#define SDA_PIN 0  //A5
 #define SCL_PORT PORTF
-#define SCL_PIN 1
+#define SCL_PIN 1  //A4
 
 #define I2C_TIMEOUT 100
 //#define I2C_NOINTERRUPT 1

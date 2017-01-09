@@ -10,3 +10,9 @@ $sudo pip install ino
 
 #### Battery Module
 > Detect Driver Board Battery
+
+#### IMUSoftI2C
+> Can Driver GY-85 Imu
+
+#### Sonar
+> Drvier HSR04 Sonar
