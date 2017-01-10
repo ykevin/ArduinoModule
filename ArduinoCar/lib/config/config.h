@@ -1,10 +1,10 @@
 #ifndef LINO_BASE_CONFIG_H
 #define LINO_BASE_CONFIG_H
 
-#define DEBUG 0
+#define DEBUG 1
 
 float K_P = 0.4; // P constant
-float K_I = 0.0; // I constant
+float K_I = 0.4; // I constant
 float K_D = 1.0; // D constant
 
 //define your motors' specs here
@@ -28,12 +28,12 @@ const float WHEEL_DIAMETER = 0.066; //wheel's diameter in meters
 //MOTOR PINS
 //left side motor pins
 #define MOTOR1_PWM 6
-#define MOTOR1_IN_A 11
-#define MOTOR1_IN_B 12
+#define MOTOR1_IN_A 12
+#define MOTOR1_IN_B 11
 
 //right side motor pins
 #define MOTOR2_PWM 5
-#define MOTOR2_IN_A 10
-#define MOTOR2_IN_B 9
+#define MOTOR2_IN_A 9
+#define MOTOR2_IN_B 10
 
 #endif

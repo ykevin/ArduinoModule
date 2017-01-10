@@ -42,6 +42,7 @@
 #define COMMAND_RATE 10 //hz
 #define DEBUG_RATE 5
 
+#define STBY	4
 //left side motors
 Motor motor1(MOTOR1_PWM, MOTOR1_IN_A, MOTOR1_IN_B); //front
 
@@ -62,8 +63,8 @@ int Motor::max_rpm = MAX_RPM;
 int Motor::counts_per_rev = COUNTS_PER_REV;
 float Motor::wheel_diameter = WHEEL_DIAMETER;
 
-double required_angular_vel = 0.5;
-double required_linear_vel = 1.0;
+double required_angular_vel = 0.7;
+double required_linear_vel = 0.5;
 unsigned long previous_command_time = 0;
 unsigned long previous_control_time = 0;
 unsigned long publish_vel_time = 0;
@@ -76,6 +77,8 @@ char buffer[50];
 
 void setup()
 {
+  pinMode(STBY, OUTPUT);
+  digitalWrite(STBY, HIGH);
   Wire.begin();
   delay(5);
 }
@@ -83,25 +86,25 @@ void setup()
 void loop()
 {
   //this block drives the robot based on defined rate
-  if ((millis() - previous_control_time) >= (3000 / COMMAND_RATE)){
+  if ((millis() - previous_control_time) >= (1000 / COMMAND_RATE)){
     do_kinematics();
     move_base();
     previous_control_time = millis();
   }
 
   //this block stops the motor when no command is received
-  if ((millis() - previous_command_time) >= 400){
-    stop_base();
-  }
+  // if ((millis() - previous_command_time) >= 400){
+  //   stop_base();
+  // }
 
   //this block publishes velocity based on defined rate
-  if ((millis() - publish_vel_time) >= (3000 / VEL_PUBLISH_RATE)){
+  if ((millis() - publish_vel_time) >= (2000 / VEL_PUBLISH_RATE)){
     publish_linear_velocity();
     publish_vel_time = millis();
   }
 
   //this block publishes the IMU data based on defined rate
-  if ((millis() - previous_imu_time) >= (3000 / IMU_PUBLISH_RATE)) {
+  if ((millis() - previous_imu_time) >= (2000 / IMU_PUBLISH_RATE)) {
     //sanity check if the IMU exits
     if (is_first) {
       check_imu();
@@ -114,7 +117,7 @@ void loop()
 
   //this block displays the encoder readings. change DEBUG to 0 if you don't want to display
   if(DEBUG) {
-    if ((millis() - previous_debug_time) >= (3000 / DEBUG_RATE)) {
+    if ((millis() - previous_debug_time) >= (2000 / DEBUG_RATE)) {
       print_debug();
       previous_debug_time = millis();
     }
@@ -165,9 +168,11 @@ void publish_linear_velocity()
   //calculate linear speed
   double linear_velocity = (average_rps * (WHEEL_DIAMETER * PI)); // m/s
 
-  sprintf(buffer, "Robot Motor RPM is : %f, Line Speed Is: %f",
-  average_rpm, linear_velocity);
-  Serial.println(buffer);
+  Serial.print("Robot Motor RPM :");
+  Serial.print(average_rpm);
+  Serial.print("   Line Speed Is: ");
+  Serial.print(linear_velocity);
+  Serial.println();
 }
 
 void check_imu()
@@ -196,32 +201,48 @@ void publish_imu()
 {
   if (accelerometer) {
     measure_acceleration();
-    sprintf(buffer, "Accelerometer is : x: %f, y: %f, z: %f",
-    raw_acceleration.x, raw_acceleration.y, raw_acceleration.z);
-    Serial.println(buffer);
+    // Serial.print("Accelerometer is ");
+    // Serial.print(" x: ");
+    // Serial.print(raw_acceleration.x);
+    // Serial.print(" y: ");
+    // Serial.print(raw_acceleration.y);
+    // Serial.print(" z: ");
+    // Serial.print(raw_acceleration.z);
+    // Serial.println();
   }
 
   //measure gyroscope
   if (gyroscope) {
     measure_gyroscope();
-    sprintf(buffer, "Gyroscope is : x: %f, y: %f, z: %f",
-    raw_rotation.x, raw_rotation.y, raw_rotation.z);
-    Serial.println(buffer);
+    // Serial.print("Gyroscope is ");
+    // Serial.print(" x: ");
+    // Serial.print(raw_rotation.x);
+    // Serial.print(" y: ");
+    // Serial.print(raw_rotation.y);
+    // Serial.print(" z: ");
+    // Serial.print(raw_rotation.z);
+    // Serial.println();
   }
 
   //measure magnetometer
   if (magnetometer) {
     measure_magnetometer();
-    sprintf(buffer, "Magnetometer is : x: %f, y: %f, z: %f",
-    raw_magnetic_field.x, raw_magnetic_field.y, raw_magnetic_field.z);
-    Serial.println(buffer);
+    // Serial.print("Magnetometer is ");
+    // Serial.print(" x: ");
+    // Serial.print(raw_magnetic_field.x);
+    // Serial.print(" y: ");
+    // Serial.print(raw_magnetic_field.y);
+    // Serial.print(" z: ");
+    // Serial.print(raw_magnetic_field.z);
+    // Serial.println();
   }
 }
 
 void print_debug()
 {
-  sprintf (buffer, "Encoder Left: %ld", motor1_encoder.read());
-  Serial.println(buffer);
-  sprintf (buffer, "Encoder Right: %ld", motor2_encoder.read());
-  Serial.println(buffer);
+  Serial.print("Encoder Left: ");
+  Serial.print(motor1_encoder.read());
+  Serial.print("   Encoder Right: ");
+  Serial.print(motor2_encoder.read());
+  Serial.println();
 }

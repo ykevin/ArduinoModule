@@ -22,10 +22,10 @@ extern "C" {
   #include <inttypes.h>
 }
 
-#define SDA_PORT PORTC
-#define SDA_PIN 4
-#define SCL_PORT PORTC
-#define SCL_PIN 5
+#define SDA_PORT PORTF
+#define SDA_PIN 0
+#define SCL_PORT PORTF
+#define SCL_PIN 1
 
 #define I2C_TIMEOUT 100
 //#define I2C_NOINTERRUPT 0
